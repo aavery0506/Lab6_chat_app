@@ -12,8 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 
 
-public class Chat extends AppCompatActivity {
+public class ChatScreen extends AppCompatActivity {
 
+    //binding not working...WHY?!?!?!?
 
 
     @Override
@@ -23,8 +24,8 @@ public class Chat extends AppCompatActivity {
 
 
         //binding = com.example.lab6_chat_app.databinding.ActivityChatBinding.inflate(getLayoutInflater());
-       // View view = binding.getRoot();
-       // setContentView(view);
+        // View view = binding.getRoot();
+        // setContentView(view);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -32,7 +33,7 @@ public class Chat extends AppCompatActivity {
             return insets;
         });
 
-        binding.TVApp.setOnClickListener(new View.OnClickListener() {
+       /* binding.TVApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Chat.this, LoginScreen.class);
@@ -40,5 +41,8 @@ public class Chat extends AppCompatActivity {
 
             }
         });
+    }
+
+        */
     }
 }
