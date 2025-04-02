@@ -22,9 +22,9 @@ public class Chat extends AppCompatActivity {
         EdgeToEdge.enable(this);
 
 
-        binding = com.example.lab6_chat_app.databinding.ActivityChatBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        //binding = com.example.lab6_chat_app.databinding.ActivityChatBinding.inflate(getLayoutInflater());
+       // View view = binding.getRoot();
+       // setContentView(view);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
