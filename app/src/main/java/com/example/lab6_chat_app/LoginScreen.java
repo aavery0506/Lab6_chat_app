@@ -65,7 +65,7 @@ public class LoginScreen extends AppCompatActivity {
 
     }
 
-    @Override
+    /*@Override
     protected void onStart(){
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser()!=null){
@@ -73,6 +73,8 @@ public class LoginScreen extends AppCompatActivity {
             finish();
         }
     }
+
+     */
     private void login() {
         FirebaseAuth.getInstance()
                 .signInWithEmailAndPassword(email.trim(),password)
