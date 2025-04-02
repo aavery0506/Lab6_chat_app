@@ -10,12 +10,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.lab6_chat_app.databinding.ActivityChatBinding;
 
 
 public class Chat extends AppCompatActivity {
 
-    ActivityChatBinding binding;
 
 
     @Override
