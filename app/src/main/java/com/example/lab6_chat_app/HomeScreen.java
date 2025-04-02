@@ -10,22 +10,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.lab6_chat_app.databinding.ActivityHomeScreenBinding;
 
-
-public class ChatScreen extends AppCompatActivity {
-
-    //binding not working...WHY?!?!?!?
-
+public class HomeScreen extends AppCompatActivity {
+    ActivityHomeScreenBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        //setContentView(R.layout.activity_home_screen);
 
+        binding = ActivityHomeScreenBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        //binding = com.example.lab6_chat_app.databinding.ActivityChatBinding.inflate(getLayoutInflater());
-        // View view = binding.getRoot();
-        // setContentView(view);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -33,16 +31,12 @@ public class ChatScreen extends AppCompatActivity {
             return insets;
         });
 
-       /* binding.TVApp.setOnClickListener(new View.OnClickListener() {
+        binding.TVApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Chat.this, LoginScreen.class);
+                Intent intent = new Intent(HomeScreen.this, LoginScreen.class);
                 startActivity(intent);
-
             }
         });
-    }
-
-        */
     }
 }
