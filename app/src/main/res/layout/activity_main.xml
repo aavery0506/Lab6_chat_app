@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MessageScreen"
+    tools:context=".MainActivity"
     android:orientation="vertical"
     android:padding="10dp"
     android:background="@color/LightPurple">
@@ -19,7 +19,7 @@
         android:gravity="center">
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/editTextChat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -37,6 +37,7 @@
         android:gravity="bottom"
         android:hint="Type a message"
         android:inputType="text"
+        android:textColor="@color/black"
         android:layout_above="@id/send"
         android:paddingBottom="20dp"/>
 
