@@ -5,7 +5,7 @@ public class ChatMessage {
 
     public ChatMessage(){}
 
-    public ChatMessage(String message, String sender){
+    public ChatMessage(String sender, String message){
         this.message = message;
         this.sender = sender;
     }

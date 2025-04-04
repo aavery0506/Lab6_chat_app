@@ -1,9 +1,11 @@
 package com.example.lab6_chat_app;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -13,8 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab6_chat_app.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth = FirebaseAuth.getInstance();
     DatabaseReference chatRef = database.getReference("chats");
+
 
     private RecyclerView.LayoutManager layoutManager;
     private ChatAdapter chatAdapter;
@@ -42,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        messageList = new ArrayList<>();
+        chatAdapter = new ChatAdapter(messageList);
+        layoutManager = new LinearLayoutManager(this);
+        binding.rView.setAdapter(chatAdapter);
+        binding.rView.setLayoutManager(layoutManager);
+
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
                 add to data base based on user
                 display on screen
                  */
+                String messageText = binding.messageInput.getText().toString().trim();
+                if(!messageText.isEmpty()){
+                    ChatMessage message = new ChatMessage("User", messageText);
+                    binding.messageInput.setText(""); //clear input
+                }
             }
         });
 
@@ -59,15 +76,29 @@ public class MainActivity extends AppCompatActivity {
                 /*TODO:
                 clear all messages from screen
                  */
+                messageList.clear();
             }
         });
 
-         messageList = new ArrayList<>();
-         chatAdapter = new ChatAdapter(messageList);
-         layoutManager = new LinearLayoutManager(this);
-         binding.rView.setAdapter(chatAdapter);
-         binding.rView.setLayoutManager(layoutManager);
+        chatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messageList.clear();
+                for(DataSnapshot data: snapshot.getChildren()){
+                    ChatMessage message = data.getValue(ChatMessage.class);
+                    if(message != null){
+                        messageList.add(message);
+                    }
+                }
+                chatAdapter.notifyDataSetChanged();
+                binding.rView.scrollToPosition(messageList.size()-1);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -78,13 +109,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //@Override
-    /*protected void onStart(){
-        super.onStart();
-        if(auth.getCurrentUser()==null){
-            auth.signInAnonymously();
-        }
-    }
-
-     */
 }
