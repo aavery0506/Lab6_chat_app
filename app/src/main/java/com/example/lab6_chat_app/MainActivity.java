@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +28,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-
     FirebaseAuth auth = FirebaseAuth.getInstance();
     DatabaseReference chatRef = database.getReference("chats");
-
-
-    private RecyclerView.LayoutManager layoutManager;
-    private ChatAdapter chatAdapter;
     public List<ChatMessage> messageList;
 
 
@@ -48,23 +43,23 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        messageList = new ArrayList<>();
-        chatAdapter = new ChatAdapter(messageList);
-        layoutManager = new LinearLayoutManager(this);
-        binding.rView.setAdapter(chatAdapter);
-        binding.rView.setLayoutManager(layoutManager);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+
+
 
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /*TODO:
                 take message from message input
-                add to data base based on user
-                display on screen
+                add to data base
                  */
                 String messageText = binding.messageInput.getText().toString().trim();
                 if(!messageText.isEmpty()){
-                    ChatMessage message = new ChatMessage("User", messageText);
+                    ChatMessage message = new ChatMessage(name, messageText);
                     binding.messageInput.setText(""); //clear input
                 }
             }
@@ -90,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         messageList.add(message);
                     }
                 }
-                chatAdapter.notifyDataSetChanged();
-                binding.rView.scrollToPosition(messageList.size()-1);
+
             }
 
             @Override
@@ -108,5 +102,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+
 
 }
