@@ -13,15 +13,18 @@ import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
     private List<ChatMessage> messages;
+
     public ChatAdapter(List<ChatMessage> messages){
         this.messages = messages;
     }
     static class ChatViewHolder extends RecyclerView.ViewHolder{
-        TextView messageText;
+        TextView messageText1;
+        TextView messageText2;
 
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);
-            messageText = itemView.findViewById(R.id.messageText);
+            messageText1 = itemView.findViewById(R.id.messageText1);
+            messageText2 = itemView.findViewById(R.id.messageText2);
         }
     }
 
@@ -35,7 +38,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     @Override
     public void onBindViewHolder(@NonNull ChatAdapter.ChatViewHolder holder, int position) {
 
-        holder.messageText.setText(this.messages.get(position).toString());
+        holder.messageText1.setText(this.messages.get(position).toString());
 
     }
 
