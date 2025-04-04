@@ -65,16 +65,6 @@ public class LoginScreen extends AppCompatActivity {
 
     }
 
-    /*@Override
-    protected void onStart(){
-        super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            startActivity(new Intent(LoginScreen.this,MainActivity.class));
-            finish();
-        }
-    }
-
-     */
     private void login() {
         FirebaseAuth.getInstance()
                 .signInWithEmailAndPassword(email.trim(),password)
@@ -82,8 +72,10 @@ public class LoginScreen extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         startActivity(new Intent(LoginScreen.this,MainActivity.class));
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         finish();
                     }
+
                 });
     }
 
