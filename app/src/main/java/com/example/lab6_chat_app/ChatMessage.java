@@ -39,6 +39,6 @@ public class ChatMessage {
     }
 
     public String toString(){
-        return "User: "+ sender + "\n"+ message;
+        return sender + ": "+ message;
     }
 }
