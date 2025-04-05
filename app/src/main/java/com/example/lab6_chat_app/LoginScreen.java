@@ -34,7 +34,8 @@ public class LoginScreen extends AppCompatActivity {
         EdgeToEdge.enable(this);
 
         binding= ActivityLoginScreenBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        View view = binding.getRoot();
+        setContentView(view);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
