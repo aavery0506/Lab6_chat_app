@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         chat1out.append("\n");
                     }
                     binding.editTextChat.setText(chat1out.toString());
+                    binding.messageInput.setText("");
                 }
 
             }
