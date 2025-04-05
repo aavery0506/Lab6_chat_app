@@ -23,22 +23,22 @@ public class ChatMessage {
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public String getSender() {
-        return sender;
+        return this.sender;
     }
 
-    public void sendMessage(String id, String sender, String messageText){
-        Map<String, Object> message = new HashMap<>();
-        message.put("senderId", sender);
-        message.put("text", messageText);
-        message.put("timestamp", ServerValue.TIMESTAMP);
-
-        // Push generates a unique key for every new message
-        chatsRef.child(id).push().setValue(message);
-
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String toString(){
+        return "User: "+ sender + "\n"+ message;
+    }
 }

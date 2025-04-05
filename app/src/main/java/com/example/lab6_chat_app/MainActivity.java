@@ -28,9 +28,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseDatabase database;
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    DatabaseReference chatRef = database.getReference("chats");
+    DatabaseReference chatRef;
     public List<ChatMessage> messageList;
 
 
@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        database = FirebaseDatabase.getInstance();
+        chatRef = database.getReference();
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
         String name = user.getDisplayName();
@@ -53,14 +56,13 @@ public class MainActivity extends AppCompatActivity {
         binding.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*TODO:
-                take message from message input
-                add to data base
-                 */
+
                 String messageText = binding.messageInput.getText().toString().trim();
                 if(!messageText.isEmpty()){
                     ChatMessage message = new ChatMessage(name, messageText);
-                    binding.messageInput.setText(""); //clear input
+                    message.setSender(name);
+                    message.setMessage(messageText);
+                    chatRef.child("chat1").push().setValue(message);
                 }
             }
         });
@@ -71,19 +73,23 @@ public class MainActivity extends AppCompatActivity {
                 /*TODO:
                 clear all messages from screen
                  */
-                messageList.clear();
+                chatRef.child("chat1").removeValue();
+                binding.editTextChat.setText("");
             }
         });
 
-        chatRef.addValueEventListener(new ValueEventListener() {
+        chatRef.child("chat1").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                messageList.clear();
+
+                StringBuilder chat1out = new StringBuilder();
                 for(DataSnapshot data: snapshot.getChildren()){
                     ChatMessage message = data.getValue(ChatMessage.class);
                     if(message != null){
-                        messageList.add(message);
+                        chat1out.append(message);
+                        chat1out.append("\n");
                     }
+                    binding.editTextChat.setText(chat1out.toString());
                 }
 
             }
@@ -93,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
